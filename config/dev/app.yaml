@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+port: 8888
+settings:
+    app_uri: http://localhost:8888
+    cookie_secret: your_cookie_secret
+    static_path: static
+    template_path: templates
+    twitter_consumer_key: twi_key
+    twitter_consumer_secret: twi_secret
+    facebook_api_key: fb_key
+    facebook_secret: fb_secret
+    google_oauth:
+        key: gg_key
+        secret: gg_secret
+    login_url: /login
+    debug: True
