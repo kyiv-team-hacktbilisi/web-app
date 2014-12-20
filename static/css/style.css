@@ -1,0 +1,20 @@
+body {
+    width: 100%;
+    margin: auto;
+}
+.login-view {
+    padding: 20px;
+    margin: auto;
+    max-width: 400px;
+}
+.login-view h2 {
+    text-align: center;
+}
+
+.login-form {
+    padding: 10px;
+}
+
+md-input-group.long > input {
+    width: 100%;
+}
