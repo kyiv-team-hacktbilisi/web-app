@@ -5,26 +5,15 @@ This is a module for controller/handlers
 
 import tornado
 
+import os
+
 from scheduler.view import BaseHandler
 
 
 class MainHandler(BaseHandler):
     """Main Handler"""
-    #@tornado.web.authenticated
     def get(self):
-        print(self.current_user)
-        args = {}
-
-        try:
-            args['user'] = self.get_secure_cookie('facebook_name').decode('utf8')
-        except:
-            pass
-        try:
-            args['avatar'] = self.get_secure_cookie('facebook_picture_url').decode('utf-8')
-        except:
-            pass
-
-        self._return('index.html', **args)
+        self.render(os.path.join(self.settings['static_path'], 'index.html'))
 
 
 class UserPortfolioHandler(BaseHandler):

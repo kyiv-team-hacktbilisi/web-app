@@ -39,13 +39,13 @@ class App(tornado.web.Application):
     def __init__(self, settings):
         handlers = [
             tornado.web.URLSpec(r'/', MainHandler, name='home'),
+            tornado.web.URLSpec(r'/(.*)', tornado.web.StaticFileHandler, {'path': os.path.join(PRJ_ROOT, 'static')}, name='homestatic'),
             tornado.web.URLSpec(r'/api', ApiHandler, name='api'),
             tornado.web.URLSpec(r'/login/', LoginHandler, name='login'),
             tornado.web.URLSpec(r'/login/google', GoogleLoginHandler, name='login_google'),
             tornado.web.URLSpec(r'/login/facebook', FacebookLoginHandler, name='login_facebook'),
             tornado.web.URLSpec(r'/login/twitter', TwitterLoginHandler, name='login_twitter'),
             tornado.web.URLSpec(r'/logout', AuthLogoutHandler, name='logout'),
-            tornado.web.URLSpec(r'/.*/portfolio', UserPortfolioHandler, name='portfolio'),
             #(r'/static/(.*)', tornado.web.StaticFileHandler,
             #                {'path': os.path.join(PRJ_ROOT, 'static')}),
         ]
@@ -60,7 +60,7 @@ class App(tornado.web.Application):
 
 
 
-        assets_env = AssetsEnvironment(settings['static_path'], '/static')
+        assets_env = AssetsEnvironment(settings['static_path'], '/')
         settings['jinja2_env'] = Jinja2Environment(loader=FileSystemLoader(template_dirs),
                                        extensions=[AssetsExtension])
         settings['jinja2_env'].assets_environment = assets_env

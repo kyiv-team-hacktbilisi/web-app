@@ -5,7 +5,8 @@ settings:
     app_uri: http://localhost:8888
     cookie_secret: your_cookie_secret
     static_path: static
-    template_path: templates
+    template_path: static
+    static_url_prefix: '.'
     twitter_consumer_key: twi_key
     twitter_consumer_secret: twi_secret
     facebook_api_key: fb_key
