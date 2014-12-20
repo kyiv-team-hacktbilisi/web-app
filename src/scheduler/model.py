@@ -11,41 +11,46 @@ from datetime import datetime, timedelta
 from hashlib import sha256
 
 from motorengine import Document, StringField, EmailField, DateTimeField, \
-                        IntField
+                        IntField, \
+                        ReferenceField, ListField, EmbeddedDocumentField
 
-from sqlalchemy import Column, Enum, func, text
-from sqlalchemy.orm import deferred
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.hybrid import hybrid_property
 
-Base = declarative_base()
-metadata = Base.metadata
+
+__all__ = [
+            "University", "Group", "User",
+            "Schedule", "DayTimetable",
+            "Lesson", "Comment"
+            ]
 
 
-__all__ = ["User"]
+class University(Document):
+    id = IntField()
+    name = StringField(required=True)
+    groups = ListField(Group())
 
 
-# NOTE: This class is PostgreSQL specific. You should customize age() and the
-# character column sizes if you want to use other databases.
+class Group(Document):
+    id = IntField()
+    name = StringField(required=True)
+    users = ListField(User)
+    university = ReferenceField(reference_document_type=University)
+    timetable = ReferenceField(reference_document_type=Schedule)
+
+
 class User(Document):
-    """
-    This example class represents a Facebook user. You can customize this class
-    however you want.
-    """
-
-    __tablename__ = "user"
-
-
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
 
-    id = Column(IntField, autoincrement=True, primary_key=True)
-    fbid = Column(IntField, unique=True, index=True)
-    username = Column(StringField, unique=True, index=True)
-    displayname = Column(StringField, nullable=False)
-    email = Column(EmailField, unique=True, nullable=False, index=True)
+    id = IntField()
+    email = EmailField()
 
-    _salt = Column("salt", StringField(12))
+    _salt = StringField(12)
+    # 64 is the length of the SHA-256 encoded string length
+    _password = StringField(64)
+
+    group = ReferenceField(reference_document_type=Group)
+    timetable = ReferenceField(reference_document_type=Schedule)
 
     @hybrid_property
     def salt(self):
@@ -59,9 +64,6 @@ class User(Document):
             self._salt = self._salt.encode('UTF-8')
 
         return self._salt
-
-    # 64 is the length of the SHA-256 encoded string length
-    _password = Column("password", StringField(64))
 
     def __encrypt_password(self, password, salt):
         """
@@ -113,29 +115,28 @@ class User(Document):
         return self.password == self.__encrypt_password(password,
                                                         b64decode(str(self.salt)))
 
-    sex = Column(Enum("m", "f", name="sex"))  # https://github.com/MongoEngine/extras-mongoengine
-    date_of_birth = Column(DateTimeField)
-    bio = deferred(Column(StringField))
 
-    @hybrid_property
-    def age(self):
-        """Property calculated from (current time - :attr:`User.date_of_birth` - leap days)"""
-        if self.date_of_birth:
-            today = (datetime.utcnow() + timedelta(hours=self.timezone)).date()
-            birthday = self.date_of_birth
-            if isinstance(birthday, datetime):
-                birthday = birthday.date()
-            age = today - (birthday or (today - timedelta(1)))
-            return (age.days - calendar.leapdays(birthday.year, today.year)) / 365
-        return -1
+class Schedule(Document):
+    days = ListField(DayTimetable())
+    user = ReferenceField(reference_document_type=User)
+    group = ReferenceField(reference_document_type=Group)
 
-    @age.expression
-    def age(cls):
-        return func.date_part("year", func.age(cls.date_of_birth))
 
-    locale = Column(StringField(10))
-    timezone = Column(IntField)
+class DayTimetable(Document):
+    name = StringField(required=True)
+    lessons = ListField(Lesson())
+    schedule = ReferenceField(reference_document_type=Schedule)
 
-    created = Column(DateTimeField, default=datetime.utcnow, server_default=text("now()"), nullable=False)
-    lastmodified = Column(DateTimeField, default=datetime.utcnow, server_default=text("now()"), nullable=False)
-    lastaccessed = Column(DateTimeField, default=datetime.utcnow, server_default=text("now()"), nullable=False)
+
+class Lesson(Document):
+    id = IntField()
+    comments = ListField(EmbeddedDocumentField(embedded_document_type=Comment))
+    day = ReferenceField(reference_document_type=DayTimetable)
+
+
+class Comment(Document):
+    user = ReferenceField(reference_document_type=User)
+    lesson = ReferenceField(reference_document_type=Lesson)
+    #user_picture_url
+    text = StringField(required=True)
+    time = DateTimeField()
