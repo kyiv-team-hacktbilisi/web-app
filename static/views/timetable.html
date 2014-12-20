@@ -1,16 +1,17 @@
 <div layout="row">
     <div layout="column" flex class="timetable-cell" ng-repeat="day in days track by $index">
         <div flex class="day-header" ng-bind="day"></div>
-        <md-card class="class-card" layout="column" ng-repeat="class in classes[$index]">
-            <div flex>
-                {{class.name}}
+        <md-card class="class-card" layout="row" ng-repeat="class in classes[$index]">
+            <div class="card-left" ng-style="{backgroundColor: class.color}">
+                {{class.start_time}}<br>
+                <div style="height:50px;width:2px;background-color:white;margin:auto">&nbsp;</div>
+                {{class.end_time}}
             </div>
-            <div layout="row"  layout-align="space-between center">
-                <div>
-                    {{class.audience}}
-                </div>
-                <div>
-                    {{class.audience}}
+            <div flex class="card-right">
+                <div ng-bind="class.name" style="font-size:18px"></div><br>
+                <div style="font-size:15px">
+                    {{class.teacher_name}}
+                    <small>({{class.audience}})</small>
                 </div>
             </div>
         </md-card>

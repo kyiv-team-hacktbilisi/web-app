@@ -42,7 +42,9 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
         }
     })
     .service('settings', function () {
-        var saved;
+        var saved = {
+            classDuration: 90
+        };
         this.save = function (data) {
             saved = data;
         };
@@ -98,12 +100,9 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
         }
     })
     .controller('SettingsController', function ($scope, $state, settings) {
-        $scope.user = {
-            classDuration: 90
-        };
+        $scope.user = settings.get();
 
         $scope.saveSettings = function () {
-            settings.save($scope.user);
             $state.go('logged.timetable');
         };
     })
@@ -113,25 +112,26 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
             'Tuesday',
             'Wednesday',
             'Thursday',
-            'Friday',
-            'Saturday'
+            'Friday'
         ];
         var oneDay = [
             {
-                name: "math",
+                name: "Mathematics",
                 audience: "103",
                 teacher_name: "Mukha I. P.",
                 type: "lection",
                 start_time: "8:30",
-                color: "#f3f"
+                end_time: "10:15",
+                color: "#4e6cef"
             },
             {
-                name: "math",
+                name: "Physics",
                 audience: "103",
                 teacher_name: "Mukha I. P.",
                 type: "lection",
                 start_time: "10:30",
-                color: "#f3f"
+                end_time: "12:10",
+                color: "#4e6cef"
             }
         ];
 

@@ -86,12 +86,29 @@ md-input-group.long > input {
 .settings-form md-input-group {
     margin-bottom: 20px;
 }
-
+md-sidenav {
+    width: 260px;
+}
 .save-btn {
     width: 100%;
 }
 .class-card {
     min-height: 100px;
+    padding: 0;
+    margin-bottom: 10px;
+}
+.icon {
+    width: 24px;
+    height: 24px;
+}
+.card-left {
+    padding:3px;
+    color: white;
+    width: 50px;
+    text-align: center;
+}
+.card-right {
+    padding:10px;
 }
 .day-header {
     text-align: center;
