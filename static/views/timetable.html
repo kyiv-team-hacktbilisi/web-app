@@ -1,1 +1,18 @@
-Timetable
+<div layout="row">
+    <div layout="column" flex class="timetable-cell" ng-repeat="day in days track by $index">
+        <div flex class="day-header" ng-bind="day"></div>
+        <md-card class="class-card" layout="column" ng-repeat="class in classes[$index]">
+            <div flex>
+                {{class.name}}
+            </div>
+            <div layout="row"  layout-align="space-between center">
+                <div>
+                    {{class.audience}}
+                </div>
+                <div>
+                    {{class.audience}}
+                </div>
+            </div>
+        </md-card>
+    </div>
+</div>

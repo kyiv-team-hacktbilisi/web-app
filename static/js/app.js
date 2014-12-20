@@ -108,7 +108,41 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
         };
     })
     .controller('TimetableController', function ($scope) {
+        $scope.days = [
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday'
+        ];
+        var oneDay = [
+            {
+                name: "math",
+                audience: "103",
+                teacher_name: "Mukha I. P.",
+                type: "lection",
+                start_time: "8:30",
+                color: "#f3f"
+            },
+            {
+                name: "math",
+                audience: "103",
+                teacher_name: "Mukha I. P.",
+                type: "lection",
+                start_time: "10:30",
+                color: "#f3f"
+            }
+        ];
 
+        $scope.classes = [
+            oneDay, //mon
+            oneDay, //tue
+            oneDay,
+            oneDay,
+            oneDay,
+            oneDay
+        ]
     })
     .run(function($rootScope, $state, $stateParams, auth) {
         $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {

@@ -2,11 +2,13 @@ body {
     width: 100%;
     margin: auto;
 }
+
 .login-view {
     padding: 20px;
     margin: auto;
     max-width: 400px;
 }
+
 .login-view h2 {
     text-align: center;
 }
@@ -40,16 +42,20 @@ body {
     transition: 0.45s cubic-bezier(0.35, 0, 0.25, 1);
     transition-property: max-height, background-color, opacity;
 }
+
 .menu-item.ng-hide {
     max-height: 0;
     opacity: 0;
 }
+
 .menu-item:hover {
     color: #999;
 }
+
 .menu-item:focus {
     font-weight: bold;
 }
+
 .menu-item.menu-title {
     color: #888;
     font-size: 14px;
@@ -58,10 +64,12 @@ body {
     text-transform: uppercase;
     transition: color 0.35s cubic-bezier(0.35, 0, 0.25, 1);
 }
+
 .menu-item.menu-title:hover,
 .menu-item.menu-title.active {
     color: #1976d2;
 }
+
 md-input-group.long > input {
     width: 100%;
 }
@@ -78,6 +86,16 @@ md-input-group.long > input {
 .settings-form md-input-group {
     margin-bottom: 20px;
 }
+
 .save-btn {
     width: 100%;
+}
+.class-card {
+    min-height: 100px;
+}
+.day-header {
+    text-align: center;
+    color: #333;
+    line-height: 40px;
+    font-size: 20px;
 }
