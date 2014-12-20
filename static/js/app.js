@@ -54,12 +54,7 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
     })
     .factory('addToGCalendar', function ($http) {
         return function (groupName, cb) {
-            $http.get('https://accounts.google.com/o/oauth2/auth?' +
-            'scope=email%20profile&' +
-            'state=%2Fprofile&' +
-            'redirect_uri=https%3A%2F%2Fuscheduler.herokuapp.com%2Foauth2callback&' +
-            'response_type=token&' +
-            'client_id=571482470120-gulh6a8qqf0kfgf1rqqeula5mgk8v698.apps.googleusercontent.com')
+            $http.get('/')
                 .success(function (data) {
                     cb(true);
                 })
