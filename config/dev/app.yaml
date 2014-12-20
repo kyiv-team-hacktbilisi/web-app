@@ -2,7 +2,7 @@
 ---
 port: 8888
 settings:
-    app_uri: http://localhost:8888
+    app_uri: https://uscheduler.herokuapp.com
     db_uri: StudentScheduler
     cookie_secret: your_cookie_secret
     static_path: static
@@ -13,7 +13,7 @@ settings:
     facebook_api_key: fb_key
     facebook_secret: fb_secret
     google_oauth:
-        key: gg_key
-        secret: gg_secret
+        key: 571482470120-gulh6a8qqf0kfgf1rqqeula5mgk8v698.apps.googleusercontent.com
+        secret: e2WRcVq09OEHwDAtsvy5Ks_e
     login_url: /login
     debug: True
