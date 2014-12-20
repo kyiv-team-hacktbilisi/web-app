@@ -95,6 +95,7 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
     })
     .controller('SettingsController', function ($scope, $state, settings) {
         $scope.user = settings.get();
+        $scope.user.university = "NTUU KPI";
 
         $scope.saveSettings = function () {
             $state.go('logged.timetable');
