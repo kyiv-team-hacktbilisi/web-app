@@ -76,7 +76,7 @@ def create_user(writer, **kwargs):
 
     student = User(**kwargs)
     get_salt(student)
-    student._password = encrypt_password(student._password,
+    student._password = encrypt_password(student.password,
                                         b64decode(str(student._salt)))
     student.save(user_create_callback)
 

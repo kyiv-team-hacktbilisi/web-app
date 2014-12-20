@@ -47,6 +47,12 @@ class Comment(Document):
 
 class Lesson(Document):
     id = IntField()
+    name = StringField(required=True)
+    audience = StringField()
+    teacher_name = StringField()
+    lesson_type = StringField()
+    start_time = StringField()
+    color = StringField()
     comments = ListField(EmbeddedDocumentField(embedded_document_type=Comment))
     day = ReferenceField('DayTimetable')
 
