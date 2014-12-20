@@ -53,12 +53,13 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
     .factory('addToGCalendar', function ($http, $cookies) {
         var token = $cookies.google_access_token;
         return function (groupName, cb) {
-            $http.get('/')
+            $http.get('http://api.rozklad.org.ua/v1/groups/' + groupName + '/lessons')
                 .success(function (data) {
+                    console.log(data);
                     cb(true);
                 })
-                .error(function (data) {
-                    cb(false, data);
+                .error(function () {
+                    cb(false);
                 });
         }
     })
@@ -111,33 +112,13 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
             $state.go('logged.timetable');
         };
     })
-    .controller('TimetableController', function ($scope, $mdDialog) {
+    .controller('TimetableController', function ($scope) {
         $scope.days = [
             'Monday',
             'Tuesday',
             'Wednesday',
             'Thursday',
             'Friday'
-        ];
-        var oneDay = [
-            {
-                name: "Mathematics",
-                audience: "103",
-                teacher_name: "Mukha I. P.",
-                type: "lection",
-                start_time: "8:30",
-                end_time: "10:15",
-                color: "#4e6cef"
-            },
-            {
-                name: "Physics",
-                audience: "103",
-                teacher_name: "Mukha I. P.",
-                type: "lection",
-                start_time: "10:30",
-                end_time: "12:10",
-                color: "#4e6cef"
-            }
         ];
 
         $scope.classes = [
@@ -282,9 +263,8 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
         
         if ($cookies.google_access_token) {
 
-            addToGCalendar($window.localStorage.group, function (result, data) {
+            addToGCalendar($window.localStorage.group, function (result) {
                 console.log('Result of adding to gcal: ' + result);
-                alert('Result of adding to gcal: ' + result + ', data: '+ data);
                 delete $cookies.google_access_token;
             });
         }
