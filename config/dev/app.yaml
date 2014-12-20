@@ -3,6 +3,7 @@
 port: 8888
 settings:
     app_uri: http://localhost:8888
+    db_uri: StudentScheduler
     cookie_secret: your_cookie_secret
     static_path: static
     template_path: static

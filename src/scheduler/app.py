@@ -14,6 +14,8 @@ import tornado.options
 import tornado.autoreload
 from tornado.options import define, options
 
+from motorengine import connect
+
 from jinja2 import Environment as Jinja2Environment, FileSystemLoader, TemplateNotFound
 
 from webassets import Environment as AssetsEnvironment
@@ -49,6 +51,8 @@ class App(tornado.web.Application):
             #(r'/static/(.*)', tornado.web.StaticFileHandler,
             #                {'path': os.path.join(PRJ_ROOT, 'static')}),
         ]
+
+        settings['db_connection'] = connect(settings['db_uri'])
 
         template_dirs = []
         jinja2_env = None
@@ -134,6 +138,8 @@ def main(is_wsgi=False):
                                 'secret': os.getenv('GOOGLE_SECRET',
                                         settings['google_oauth'].get('secret'))
                                 }
+
+    settings['db_uri'] = os.getenv('MONGOLAB_URI', settings.get('db_uri', ''))
 
 
     for k, v in settings.items():
