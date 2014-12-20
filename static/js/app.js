@@ -53,7 +53,7 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
     .factory('addToGCalendar', function ($http, $cookies) {
         var token = $cookies.google_access_token;
         return function (groupName, cb) {
-            $http.get('http://api.rozklad.org.ua/v1/groups/' + groupName + '/lessons')
+            $http.jsonp('http://api.rozklad.org.ua/v1/groups/' + groupName + '/lessons?week=1&callback=JSON_CALLBACK')
                 .success(function (data) {
                     console.log(data);
                     cb(true);
