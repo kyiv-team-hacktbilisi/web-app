@@ -55,13 +55,10 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
     .controller('AuthController', function ($scope, $http, $cookies, $state) {
         $scope.signIn = function () {
             console.log('Sending sign in request');
-            $http.post('/api/auth/', {
-                email: $scope.email,
-                password: $scope.password
-            }).then(function (result) {
+            $http.post('/api/auth/', $scope.user).then(function (result) {
                 $cookies.loggedIn = true;
                 $cookies.email = $scope.email;
-                if (result.data.result === 'success') {
+                if (result.status === 200) {
                     console.log('Logged in');
                     $state.go('logged.settings');
                 } else {
@@ -74,13 +71,10 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
 
         $scope.signUp = function () {
             console.log('Sending sign up request');
-            $http.post('/api/user/', {
-                email: $scope.email,
-                password: $scope.password
-            }).then(function (result) {
+            $http.post('/api/user/', $scope.user).then(function (result) {
                 $cookies.loggedIn = true;
                 $cookies.email = $scope.email;
-                if (result.data.result === 'success') {
+                if (result.status === 200) {
                     console.log('Registered');
                     $scope.signIn();
                 } else {
