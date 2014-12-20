@@ -65,3 +65,19 @@ body {
 md-input-group.long > input {
     width: 100%;
 }
+
+.longer > input {
+    width: 600px;
+}
+
+.settings-form {
+    margin: auto;
+    width: 600px;
+}
+
+.settings-form md-input-group {
+    margin-bottom: 20px;
+}
+.save-btn {
+    width: 100%;
+}

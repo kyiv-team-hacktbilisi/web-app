@@ -41,6 +41,15 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
             return $cookies.loggedIn;
         }
     })
+    .service('settings', function () {
+        var saved;
+        this.save = function (data) {
+            saved = data;
+        };
+        this.get = function () {
+            return saved;
+        };
+    })
     .controller('AuthController', function ($scope, $http, $cookies, $state) {
         $scope.signIn = function () {
             console.log('Sending sign in request');
@@ -88,8 +97,15 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
             $state.go('auth');
         }
     })
-    .controller('SettingsController', function ($scope) {
+    .controller('SettingsController', function ($scope, $state, settings) {
+        $scope.user = {
+            classDuration: 90
+        };
 
+        $scope.saveSettings = function () {
+            settings.save($scope.user);
+            $state.go('logged.timetable');
+        };
     })
     .controller('TimetableController', function ($scope) {
 

@@ -1,1 +1,11 @@
-Settings
+<md-content layout="column" layout-align="center center" style="padding: 20px;" class="settings-form" >
+    <md-text-float label="Choose university" class="longer"
+                   ng-model="user.university" disabled></md-text-float>
+    <md-text-float label="Choose name" class="longer"
+                   ng-model="user.name" disabled></md-text-float>
+    <md-text-float label="Choose group" class="longer"
+                   ng-model="user.group" disabled></md-text-float>
+    <md-text-float label="Lesson duration" class="longer" type="number"
+                   ng-model="user.classDuration" disabled></md-text-float>
+    <md-button class="md-raised md-primary save-btn" ng-click="saveSettings()">Save</md-button>
+</md-content>
