@@ -25,8 +25,8 @@ class UserApiHandler(BaseRESTController):
     #@tornado.gen.coroutine
     def post(self):
         kwargs = json_decode(self.request.body)
-        create_user(self._return, **kwargs)
-        #self._return({'result': 'success'})
+        self._return({'result': 'success'})
+        #create_user(self._return, **kwargs)
 
 @routes('/api/auth/', name="auth_api")
 class AuthApiHandler(BaseRESTController):
@@ -34,8 +34,8 @@ class AuthApiHandler(BaseRESTController):
     def post(self):
         """Login"""
         kwargs = json_decode(self.request.body)
-        authenticate_user(self._return, **kwargs)
-        #self._return({'result': 'success'})  # or error
+        #authenticate_user(self._return, **kwargs)
+        self._return({'result': 'success'})  # or error
     @tornado.web.asynchronous
     def delete(self):
         """Logout"""

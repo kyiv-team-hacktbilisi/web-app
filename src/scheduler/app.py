@@ -52,7 +52,14 @@ class App(tornado.web.Application):
             #                {'path': os.path.join(PRJ_ROOT, 'static')}),
         ]
 
-        settings['db_connection'] = connect(settings['db_uri'])
+        if not settings['db_uri'].startswith('mongodb://'):
+            settings['db_connection'] = connect(settings['db_uri'])
+        else:
+            #_tmp_db = settings['db_uri'][10:]
+            #_tmp_db_name = _tmp_db.split('/')[1]
+            #host="localhost", port=27017
+            #settings['db_connection'] = connect(_tmp_db_name, host="localhost", port=27017)
+            pass
 
         template_dirs = []
         jinja2_env = None

@@ -89,6 +89,8 @@ def authenticate_user(writer, **kwargs):
             #writer({})
             raise IOError
 
+        import ipdb; ipdb.set_trace()
+
         if validate_password(student, kwargs['password']):
             st = {}
             for field in student._reverse_db_field_map:
