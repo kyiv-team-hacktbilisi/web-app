@@ -81,6 +81,8 @@ class JSONHandler(tornado.web.RequestHandler):
             _tmp = {}
             for field in obj._reverse_db_field_map:
                 _tmp[field] = obj.get_field_value(field)
+                if isinstance(_tmp[field], bytes):
+                    _tmp[field] = _tmp[field].decode()
             obj = _tmp
             del _tmp
         json.dump(obj, self)
