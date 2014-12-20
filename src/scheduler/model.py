@@ -35,8 +35,8 @@ class User(Document):
     # 64 is the length of the SHA-256 encoded string length
     _password = StringField(64)
 
-    group = ReferenceField('Group')
-    timetable = EmbeddedDocumentField('Schedule')
+    group = ReferenceField('scheduler.model.Group')
+    timetable = EmbeddedDocumentField('scheduler.model.Schedule')
 
     @hybrid_property
     def salt(self):
@@ -119,13 +119,13 @@ class Lesson(Document):
 class DayTimetable(Document):
     name = StringField(required=True)
     lessons = ListField(EmbeddedDocumentField(Lesson()))
-    schedule = ReferenceField('Schedule')
+    schedule = ReferenceField('scheduler.model.Schedule')
 
 
 class Schedule(Document):
     days = ListField(EmbeddedDocumentField(DayTimetable()))
     user = ReferenceField(reference_document_type=User)
-    group = ReferenceField('Group')
+    group = ReferenceField('scheduler.model.Group')
     pass
 
 
