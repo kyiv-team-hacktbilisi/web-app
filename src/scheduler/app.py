@@ -24,6 +24,7 @@ import os
 import sys
 
 from scheduler import SRC_DIR, PRJ_ROOT, __config__
+from scheduler.utils import routes
 
 from scheduler.controller import MainHandler, UserPortfolioHandler, \
     LoginHandler, AuthLogoutHandler, \
@@ -37,10 +38,9 @@ define('version', default='dev', help='Version settings (default: dev)')
 class App(tornado.web.Application):
     """Main Tornado app"""
     def __init__(self, settings):
-        handlers = [
+        handlers = routes.get_routes() + [
             tornado.web.URLSpec(r'/', MainHandler, name='home'),
             tornado.web.URLSpec(r'/(.*)', tornado.web.StaticFileHandler, {'path': os.path.join(PRJ_ROOT, 'static')}, name='homestatic'),
-            tornado.web.URLSpec(r'/api', ApiHandler, name='api'),
             tornado.web.URLSpec(r'/login/', LoginHandler, name='login'),
             tornado.web.URLSpec(r'/login/google', GoogleLoginHandler, name='login_google'),
             tornado.web.URLSpec(r'/login/facebook', FacebookLoginHandler, name='login_facebook'),
