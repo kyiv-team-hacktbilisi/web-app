@@ -41,10 +41,10 @@ class App(tornado.web.Application):
     """Main Tornado app"""
     def __init__(self, settings):
         handlers = routes.get_routes() + [
+            tornado.web.URLSpec(r'/login/google', GoogleLoginHandler, name='login_google'),
             tornado.web.URLSpec(r'/', MainHandler, name='home'),
             tornado.web.URLSpec(r'/(.*)', tornado.web.StaticFileHandler, {'path': os.path.join(PRJ_ROOT, 'static')}, name='homestatic'),
             tornado.web.URLSpec(r'/login/', LoginHandler, name='login'),
-            tornado.web.URLSpec(r'/login/google', GoogleLoginHandler, name='login_google'),
             tornado.web.URLSpec(r'/login/facebook', FacebookLoginHandler, name='login_facebook'),
             tornado.web.URLSpec(r'/login/twitter', TwitterLoginHandler, name='login_twitter'),
             tornado.web.URLSpec(r'/logout', AuthLogoutHandler, name='logout'),
