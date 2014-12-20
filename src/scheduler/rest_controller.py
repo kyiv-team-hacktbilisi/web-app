@@ -25,16 +25,18 @@ class UserApiHandler(BaseRESTController):
     #@tornado.gen.coroutine
     def post(self):
         kwargs = json_decode(self.request.body)
-        print(kwargs)
         create_user(self._return, **kwargs)
         #self._return({'result': 'success'})
 
 @routes('/api/auth/', name="auth_api")
 class AuthApiHandler(BaseRESTController):
+    @tornado.web.asynchronous
     def post(self):
         """Login"""
-        #authenticate_user(**kwargs)
-        self._return({'result': 'success'})  # or error
+        kwargs = json_decode(self.request.body)
+        authenticate_user(self._return, **kwargs)
+        #self._return({'result': 'success'})  # or error
+    @tornado.web.asynchronous
     def delete(self):
         """Logout"""
         #logout_user(**kwargs)
@@ -42,10 +44,12 @@ class AuthApiHandler(BaseRESTController):
 
 @routes('/api/university/', name="univ_api")
 class UniversityApiHandler(BaseRESTController):
+    @tornado.web.asynchronous
     def post(self):
         """Create"""
         #create_university(**kwargs)
         self._return({'id': 1})  # or some other int, otherwise - error
+    @tornado.web.asynchronous
     def get(self):
         """Autocomplete"""
         #get_universities(**kwargs)
@@ -53,10 +57,12 @@ class UniversityApiHandler(BaseRESTController):
 
 @routes('/api/group/', name="group_api")
 class GroupApiHandler(BaseRESTController):
+    @tornado.web.asynchronous
     def post(self):
         """Create"""
         #create_group(**kwargs)
         self._return({'id': 1})  # or some other int, otherwise - error
+    @tornado.web.asynchronous
     def get(self):
         """Autocomplete"""
         #get_groups(**kwargs)
@@ -64,6 +70,7 @@ class GroupApiHandler(BaseRESTController):
 
 @routes('/api/class/', name="class_api")
 class ClassApiHandler(BaseRESTController):
+    @tornado.web.asynchronous
     def post(self):
         """Create"""
         #create_class(**kwargs)
@@ -71,6 +78,7 @@ class ClassApiHandler(BaseRESTController):
 
 @routes('/api/timetable/', name="sched_api")
 class TimetableApiHandler(BaseRESTController):
+    @tornado.web.asynchronous
     def get(self):
         """Create"""
         #create_timetable(**kwargs)
@@ -351,6 +359,7 @@ class TimetableApiHandler(BaseRESTController):
 
 @routes('/api/comment/', name="comment_api")
 class CommentApiHandler(BaseRESTController):
+    @tornado.web.asynchronous
     def post(self):
         """Post"""
         #create_comment(**kwargs)
@@ -361,6 +370,7 @@ class CommentApiHandler(BaseRESTController):
                         'time': '08:00',
                     })  # or some other int, otherwise - error
 
+    @tornado.web.asynchronous
     def get(self):
         """Get lesson messages"""
         #get_comment_list(**kwargs)
