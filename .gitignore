@@ -1,5 +1,9 @@
 # idea
 .idea
+
+# generated files
+static/gen
+static/.webassets-cache
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
