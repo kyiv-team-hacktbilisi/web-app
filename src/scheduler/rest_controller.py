@@ -7,6 +7,8 @@ from scheduler.utils import routes
 
 from scheduler.view import BaseRESTController
 
+from scheduler.api import *
+
 
 @routes("/api/", name="api")
 class ApiHandler(BaseRESTController):

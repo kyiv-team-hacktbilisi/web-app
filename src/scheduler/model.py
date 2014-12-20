@@ -24,20 +24,6 @@ __all__ = [
             ]
 
 
-class University(Document):
-    id = IntField()
-    name = StringField(required=True)
-    groups = ListField(Group())
-
-
-class Group(Document):
-    id = IntField()
-    name = StringField(required=True)
-    users = ListField(User)
-    university = ReferenceField(reference_document_type=University)
-    timetable = ReferenceField(reference_document_type=Schedule)
-
-
 class User(Document):
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
@@ -49,8 +35,8 @@ class User(Document):
     # 64 is the length of the SHA-256 encoded string length
     _password = StringField(64)
 
-    group = ReferenceField(reference_document_type=Group)
-    timetable = ReferenceField(reference_document_type=Schedule)
+    group = ReferenceField('Group')
+    timetable = EmbeddedDocumentField('Schedule')
 
     @hybrid_property
     def salt(self):
@@ -116,27 +102,42 @@ class User(Document):
                                                         b64decode(str(self.salt)))
 
 
-class Schedule(Document):
-    days = ListField(DayTimetable())
+class Comment(Document):
     user = ReferenceField(reference_document_type=User)
-    group = ReferenceField(reference_document_type=Group)
-
-
-class DayTimetable(Document):
-    name = StringField(required=True)
-    lessons = ListField(Lesson())
-    schedule = ReferenceField(reference_document_type=Schedule)
+    lesson = ReferenceField('Lesson')
+    #user_picture_url
+    text = StringField(required=True)
+    time = DateTimeField()
 
 
 class Lesson(Document):
     id = IntField()
     comments = ListField(EmbeddedDocumentField(embedded_document_type=Comment))
-    day = ReferenceField(reference_document_type=DayTimetable)
+    day = ReferenceField('DayTimetable')
 
 
-class Comment(Document):
+class DayTimetable(Document):
+    name = StringField(required=True)
+    lessons = ListField(EmbeddedDocumentField(Lesson()))
+    schedule = ReferenceField('Schedule')
+
+
+class Schedule(Document):
+    days = ListField(EmbeddedDocumentField(DayTimetable()))
     user = ReferenceField(reference_document_type=User)
-    lesson = ReferenceField(reference_document_type=Lesson)
-    #user_picture_url
-    text = StringField(required=True)
-    time = DateTimeField()
+    group = ReferenceField('Group')
+    pass
+
+
+class Group(Document):
+    id = IntField()
+    name = StringField(required=True)
+    users = ListField(ReferenceField('User'))
+    university = ReferenceField('University')
+    timetable = EmbeddedDocumentField(Schedule())
+
+
+class University(Document):
+    id = IntField()
+    name = StringField(required=True)
+    groups = ListField(EmbeddedDocumentField(Group()))
