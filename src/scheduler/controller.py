@@ -57,11 +57,10 @@ class GoogleOAuth2LoginHandler(tornado.web.RequestHandler,
                     code=self.get_argument('code'))
             #print(user)
             # Save the user with e.g. set_secure_cookie
-            self.set_secure_cookie('google_expires_in', str(user['expires_in']))
-            self.set_secure_cookie('google_access_token', user['access_token'])
-            self.set_secure_cookie('google_token_type', user['token_type'])
-            self.set_secure_cookie('google_id_token', user['id_token'])
-            self.set_secure_cookie('user', user['id_token'])  # just a fallback
+            self.set_cookie('google_expires_in', str(user['expires_in']))
+            self.set_cookie('google_access_token', user['access_token'])
+            self.set_cookie('google_token_type', user['token_type'])
+            self.set_cookie('google_id_token', user['id_token'])
             self.redirect('/')
         else:
             yield self.authorize_redirect(
