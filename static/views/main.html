@@ -1,2 +1,24 @@
-Main template
-<div ui-view="mainView"></div>
+<div layout="column" layout-fill>
+    <section layout="row" flex>
+        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$media('gt-md')">
+            <md-toolbar class="md-theme-indigo">
+                <h1 class="md-toolbar-tools">uniScheduler</h1>
+            </md-toolbar>
+            <md-content class="md-padding" flex>
+                <a ui-sref="logged.timetable" class="menu-item menu-sub-item menu-title md-menu-item">Timetable</a>
+                <a ui-sref="logged.settings" class="menu-item menu-sub-item menu-title md-menu-item">Settings</a>
+            </md-content>
+            <md-button style="margin: 20px" class="md-warn" ng-click="logOut()">Log out</md-button>
+        </md-sidenav>
+        <div layout="column" flex>
+            <md-toolbar class="md-default-theme">
+                <h2 class="md-toolbar-tools" ui-view="titleView">
+
+                </h2>
+            </md-toolbar>
+            <md-content flex class="md-padding">
+                <div ui-view="mainView"></div>
+            </md-content>
+        </div>
+    </section>
+</div>

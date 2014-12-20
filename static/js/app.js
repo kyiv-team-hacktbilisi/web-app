@@ -8,7 +8,8 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
                 controller: 'AuthController'
             })
             .state('logged', {
-                templateUrl: '/views/main.html'
+                templateUrl: '/views/main.html',
+                controller: 'MainController'
             })
             .state('logged.settings', {
                 url: '/settings',
@@ -16,15 +17,21 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
                     'mainView': {
                         templateUrl: 'views/settings.html',
                         controller: 'SettingsController'
+                    },
+                    'titleView': {
+                        template: 'Settings'
                     }
                 }
             })
-            .state('logged.schedule', {
+            .state('logged.timetable', {
+                url: '/timetable',
                 views: {
                     'mainView': {
-                        url: '/schedule',
-                        templateUrl: 'views/schedule.html',
-                        controller: 'ScheduleController'
+                        templateUrl: 'views/timetable.html',
+                        controller: 'TimetableController'
+                    },
+                    'titleView': {
+                        template: 'Timetable'
                     }
                 }
             });
@@ -73,10 +80,18 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
             })
         }
     })
+    .controller('MainController', function ($scope, $state, $cookies) {
+        $scope.logOut = function () {
+            delete $cookies.loggedIn;
+            delete $cookies.email;
+            delete $cookies.password;
+            $state.go('auth');
+        }
+    })
     .controller('SettingsController', function ($scope) {
 
     })
-    .controller('ScheduleController', function ($scope) {
+    .controller('TimetableController', function ($scope) {
 
     })
     .run(function($rootScope, $state, $stateParams, auth) {
