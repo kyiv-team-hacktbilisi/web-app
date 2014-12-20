@@ -70,8 +70,34 @@ class BaseHandler(tornado.web.RequestHandler, TemplateRendering):
 
 
 class JSONHandler(tornado.web.RequestHandler):
+    def initialize(self):
+        super().initialize()
+        self.set_header("Content-Type", "application/json")
+
+    def _render(self, obj):
+        json.dump(obj, self)
+
     """Handler with JSON output"""
     def _return(self, obj):
-        self.set_header("Content-Type", "application/json")
-        json.dump(obj, self)
+        self._render(obj)
         self.finish()
+
+
+class BaseRESTController(JSONHandler):
+    """Handler with JSON output and all HTTP methods restricted"""
+    def _report_error(self, error_text, error_code=403):
+        self.set_status(error_code)
+        self._return({'code': error_code, 'error': error_text})
+
+    def get(self, *args, **kwargs):
+        self._report_error('This method is not allowed')
+
+    def post(self, *args, **kwargs):
+        self._report_error('This method is not allowed')
+
+    def put(self, *args, **kwargs):
+        self._report_error('This method is not allowed')
+
+    def delete(self, *args, **kwargs):
+        self._report_error('This method is not allowed')
+
