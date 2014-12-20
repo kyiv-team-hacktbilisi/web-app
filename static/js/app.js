@@ -41,18 +41,17 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
             return $cookies.loggedIn;
         }
     })
-    .service('settings', function () {
-        var saved = {
-            classDuration: 90
-        };
+    .service('settings', function ($window) {
+        var saved = $window.localStorage;
         this.save = function (data) {
-            saved = data;
+            //saved = data;
         };
         this.get = function () {
             return saved;
         };
     })
-    .factory('addToGCalendar', function ($http) {
+    .factory('addToGCalendar', function ($http, $cookies) {
+        var token = $cookies.google_access_token;
         return function (groupName, cb) {
             $http.get('/')
                 .success(function (data) {
@@ -110,13 +109,6 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
 
         $scope.saveSettings = function () {
             $state.go('logged.timetable');
-        };
-
-        $scope.addToGCalendar = function () {
-            addToGCalendar($scope.user.group, function (result, data) {
-                console.log('Result of adding to gcal: ' + result);
-                alert('Result of adding to gcal: ' + result + ', data: '+ data);
-            });
         };
     })
     .controller('TimetableController', function ($scope, $mdDialog) {
@@ -269,7 +261,7 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
             ]
         ];
     })
-    .run(function($rootScope, $state, $stateParams, auth) {
+    .run(function($rootScope, $state, $stateParams, auth, $cookies, addToGCalendar) {
         $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {
             // track the state the user wants to go to; authorization service needs this
             $rootScope.toState = toState;
@@ -287,4 +279,13 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
                 console.log('logged in');
             }
         });
+        
+        if ($cookies.google_access_token) {
+
+            addToGCalendar($window.localStorage.group, function (result, data) {
+                console.log('Result of adding to gcal: ' + result);
+                alert('Result of adding to gcal: ' + result + ', data: '+ data);
+                delete $cookies.google_access_token;
+            });
+        }
     });
