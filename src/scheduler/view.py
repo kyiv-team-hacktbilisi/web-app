@@ -11,6 +11,8 @@ import os
 import tornado.web
 from jinja2 import Environment as Jinja2Environment, FileSystemLoader, TemplateNotFound
 
+from scheduler.model import Document
+
 from webassets import Environment as AssetsEnvironment
 from webassets.ext.jinja2 import AssetsExtension
 
@@ -75,6 +77,12 @@ class JSONHandler(tornado.web.RequestHandler):
         self.set_header("Content-Type", "application/json")
 
     def _render(self, obj):
+        if isinstance(obj, Document):
+            _tmp = {}
+            for field in obj._reverse_db_field_map:
+                _tmp[field] = obj.get_field_value(field)
+            obj = _tmp
+            del _tmp
         json.dump(obj, self)
 
     """Handler with JSON output"""
@@ -100,4 +108,3 @@ class BaseRESTController(JSONHandler):
 
     def delete(self, *args, **kwargs):
         self._report_error('This method is not allowed')
-
