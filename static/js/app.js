@@ -100,7 +100,7 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
             $state.go('logged.timetable');
         };
     })
-    .controller('TimetableController', function ($scope) {
+    .controller('TimetableController', function ($scope, $mdDialog) {
         $scope.days = [
             'Monday',
             'Tuesday',
@@ -130,13 +130,125 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
         ];
 
         $scope.classes = [
-            oneDay, //mon
-            oneDay, //tue
-            oneDay,
-            oneDay,
-            oneDay,
-            oneDay
-        ]
+            [
+                {
+                    name: "Mathematics",
+                    audience: "103",
+                    teacher_name: "Mukha I. P.",
+                    type: "lection",
+                    start_time: "8:30",
+                    end_time: "10:15",
+                    color: "#4e6cef"
+                },
+                {
+                    name: "Physics",
+                    audience: "103",
+                    teacher_name: "Rokoviy I. P.",
+                    type: "lection",
+                    start_time: "10:25",
+                    end_time: "12:20",
+                    color: "#4e6cef"
+                },
+                {
+                    name: "English",
+                    audience: "103",
+                    teacher_name: "Pasichniy I. P.",
+                    type: "lection",
+                    start_time: "12:20",
+                    end_time: "14:15",
+                    color: "#4e6cef"
+                }
+            ], //mon
+            [
+                {
+                    name: "Software Engineering",
+                    audience: "103",
+                    teacher_name: "Buzovskiy Q. P.",
+                    type: "lection",
+                    start_time: "10:30",
+                    end_time: "12:10",
+                    color: "#4e6cef"
+                }
+            ], //tue
+            [
+                {
+                    name: "Computer Engineering",
+                    audience: "103",
+                    teacher_name: "Ivanov I. P.",
+                    type: "lection",
+                    start_time: "8:30",
+                    end_time: "10:15",
+                    color: "#4e6cef"
+                },
+                {
+                    name: "Theory of algorithms",
+                    audience: "103",
+                    teacher_name: "Molchanovskiy I. O.",
+                    type: "lection",
+                    start_time: "10:25",
+                    end_time: "12:20",
+                    color: "#4e6cef"
+                },
+                {
+                    name: "Computer science",
+                    audience: "103",
+                    teacher_name: "Mukha I. P.",
+                    type: "lection",
+                    start_time: "12:20",
+                    end_time: "14:15",
+                    color: "#4e6cef"
+                }
+            ], // wed
+            [
+                {
+                    name: "Algorithms and DS",
+                    audience: "103",
+                    teacher_name: "Boldak  A. O.",
+                    type: "lection",
+                    start_time: "8:30",
+                    end_time: "10:15",
+                    color: "#4e6cef"
+                },
+                {
+                    name: "Electrical Engineering",
+                    audience: "103",
+                    teacher_name: "Korochkin O. V",
+                    type: "lection",
+                    start_time: "10:25",
+                    end_time: "12:20",
+                    color: "#4e6cef"
+                }
+            ], // thir
+            [
+                {
+                    name: "Computer modelling",
+                    audience: "103",
+                    teacher_name: "Saverchenko V.G.",
+                    type: "lection",
+                    start_time: "8:30",
+                    end_time: "10:15",
+                    color: "#4e6cef"
+                },
+                {
+                    name: "Computer systems",
+                    audience: "103",
+                    teacher_name: "Lutrkiy G. M.",
+                    type: "lection",
+                    start_time: "10:25",
+                    end_time: "12:20",
+                    color: "#4e6cef"
+                },
+                {
+                    name: "OOP",
+                    audience: "103",
+                    teacher_name: "Nevdaschenko M. V.",
+                    type: "lection",
+                    start_time: "12:20",
+                    end_time: "14:15",
+                    color: "#4e6cef"
+                }
+            ]
+        ];
     })
     .run(function($rootScope, $state, $stateParams, auth) {
         $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {

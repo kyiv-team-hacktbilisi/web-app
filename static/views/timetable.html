@@ -1,7 +1,8 @@
 <div layout="row">
     <div layout="column" flex class="timetable-cell" ng-repeat="day in days track by $index">
-        <div flex class="day-header" ng-bind="day"></div>
-        <md-card class="class-card" layout="row" ng-repeat="class in classes[$index]">
+        <div class="day-header" ng-bind="day"></div>
+        <md-card class="class-card" layout="row"
+                 ng-repeat="class in classes[$index]">
             <div class="card-left" ng-style="{backgroundColor: class.color}">
                 {{class.start_time}}<br>
                 <div style="height:50px;width:2px;background-color:white;margin:auto">&nbsp;</div>
