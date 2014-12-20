@@ -331,7 +331,7 @@ class TimetableApiHandler(BaseRESTController):
                         ],
                     ])  # or some other int, otherwise - error
 
-@routes('/api/comment/', name="group_api")
+@routes('/api/comment/', name="comment_api")
 class GroupApiHandler(BaseRESTController):
     def post(self):
         """Post"""
