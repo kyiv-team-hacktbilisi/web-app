@@ -261,7 +261,7 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
             ]
         ];
     })
-    .run(function($rootScope, $state, $stateParams, auth, $cookies, addToGCalendar) {
+    .run(function($rootScope, $state, $stateParams, auth, $cookies, addToGCalendar, $window) {
         $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {
             // track the state the user wants to go to; authorization service needs this
             $rootScope.toState = toState;
