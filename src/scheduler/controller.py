@@ -66,7 +66,7 @@ class GoogleOAuth2LoginHandler(tornado.web.RequestHandler,
             yield self.authorize_redirect(
                 redirect_uri='{}/login/google'.format(self.settings['app_uri']),
                 client_id=self.settings['google_oauth']['key'],
-                scope=['profile', 'email'],
+                scope=['profile', 'email', 'calendar'],
                 response_type='code',
                 extra_params={'approval_prompt': 'auto'})
 
