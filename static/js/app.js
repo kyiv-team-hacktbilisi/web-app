@@ -56,7 +56,13 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
             $http.post('/api/kpi_schedule/', {group: groupName})
                 .success(function (data) {
                     console.log(data);
-                    cb(true);
+                    $http.post('https://www.googleapis.com/calendar/v3/calendars/?access_token=' + token, {
+                        summary: "University schedule"
+                    }).success(function (data) {
+                        cb(true);
+                    }).error(function () {
+                        cb(false);
+                    })
                 })
                 .error(function () {
                     cb(false);
