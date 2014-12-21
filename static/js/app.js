@@ -67,14 +67,14 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
                         var ps = [];
                         for (var i = 0; i < classes.length; i++) {
                             var lesson = classes[i];
-                            var day = moment([2014, 8, 1, 8, 0]).day(lesson.day_number).date();
+                            var date = moment([2014, 8, 1, 8, 0]).day(lesson.day_number);
                             if (lesson.lesson_week === '2') {
-                                day += 7;
+                                date.add(7, 'day');
                             }
-                            if (day > 15 && day <= 31) {
-                                day += 14;
+                            if (date.day() > 14) {
+                                date.add(14, 'day');
                             }
-                            day %= 31;
+                            var day = date.day();
                             
                             ps.push($http.post(
                                 'https://www.googleapis.com/calendar/v3/calendars/' + 
