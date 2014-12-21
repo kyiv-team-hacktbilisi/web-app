@@ -75,6 +75,7 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
                                 date.add(14, 'day');
                             }
                             var day = date.date();
+                            var daystr = day < 10 ? ('0' + day) : ('' + day);
                             
                             ps.push($http.post(
                                 'https://www.googleapis.com/calendar/v3/calendars/' + 
@@ -82,15 +83,15 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
                                     summary: lesson.lesson_name,
                                     description: lesson.lesson_name + ' (' + lesson.lesson_type + ')',
                                     start: {
-                                        dateTime: '2014-09-0' + day + 'T' + lesson.time_start,
+                                        dateTime: '2014-09-' + daystr + 'T' + lesson.time_start,
                                         timeZone: 'Europe/Kiev'
                                     },
                                     end: {
-                                        dateTime: '2014-09-0' + day + 'T' + lesson.time_end,
+                                        dateTime: '2014-09-' + daystr + 'T' + lesson.time_end,
                                         timeZone: 'Europe/Kiev'
                                     },
                                     recurrence: [
-                                        "RRULE:FREQ=WEEKLY;UNTIL=20141231T235959Z"
+                                        "RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20141231T235959Z"
                                     ],
                                     location: "НТУУ КПІ (" + lesson.lesson_room + ")"
                             }));
