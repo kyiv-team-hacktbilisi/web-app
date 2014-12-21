@@ -73,11 +73,14 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
                                     summary: lesson.lesson_name,
                                     description: lesson.lesson_name + ' at ' + lesson.lesson_type,
                                     start: {
-                                        dateTime: '2014-09-01T00:00:00+02:00'
+                                        dateTime: '2014-09-01T' + event.time_start,
+                                        timeZone: 'Europe/Kiev'
                                     },
                                     end: {
-                                        dateTime: '2014-12-31T23:59:59+02:00'
-                                    }
+                                        dateTime: '2014-09-01T' + event.time_end,
+                                        timeZone: 'Europe/Kiev'
+                                    },
+                                    location: "NTUU KPI " + lesson.lesson_room
                             }));
                         }
                         $q.all(ps).then(function () {
