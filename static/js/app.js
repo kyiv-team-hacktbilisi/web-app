@@ -150,7 +150,7 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
     })
     .controller('SettingsController', function ($scope, $state, settings, addToGCalendar) {
         $scope.user = settings.get();
-        $scope.user.university = "NTUU KPI";
+        $scope.user.university = "kpi";
 
         $scope.saveSettings = function () {
             $state.go('logged.timetable');
