@@ -68,7 +68,7 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
                         for (var i = 0; i < classes.length; i++) {
                             var lesson = classes[i];
                             var day = moment([2014, 8, 1, 8, 0]).day(lesson.day_number).date();
-                            if (lesson.lesson_week === 2) {
+                            if (lesson.lesson_week === '2') {
                                 day += 7;
                             }
                             if (day > 15 && day <= 31) {
