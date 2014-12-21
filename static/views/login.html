@@ -6,8 +6,9 @@
         <md-text-float type="password" flex label="Password" ng-model="user.password" class="long"></md-text-float>
         <div layout="row" layout-margin layout-fill>
             <md-button flex class="md-raised" ng-click="signIn()">Sign in</md-button>
-            <md-button flex class="md-raised" ng-click="signUp()">Sign up</md-button>
+            <!--<md-button flex class="md-raised" ng-click="signUp()">Sign up</md-button>-->
         </div>
+        <h5 style="color:red; text-align:center" ng-show="showError" flex>Wrong email or password</h5>
     </form>
     </md-card>
 </div>

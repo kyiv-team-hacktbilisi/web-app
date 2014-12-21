@@ -113,18 +113,15 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
     .controller('AuthController', function ($scope, $http, $cookies, $state) {
         $scope.signIn = function () {
             console.log('Sending sign in request');
-           // $http.post('/api/auth/', $scope.user).then(function (result) {
+            $scope.user = $scope.user || {};
+            if ($scope.user.email === 'guest@gmail.com' && $scope.user.password === 'password') {
+                console.log('Logged in');
                 $cookies.loggedIn = true;
-                $cookies.email = $scope.email;
-                if (true || result.status === 200) {
-                    console.log('Logged in');
-                    $state.go('logged.settings');
-                } else {
-                    console.log('/api/auth no result === success');
-                }
-            //}, function () {
-            //    console.log('/api/auth err connection');
-            //})
+                $state.go('logged.settings');
+            } else {
+                $scope.showError = true;
+                console.log('/api/auth no result === success');
+            }
         };
 
         $scope.signUp = function () {
