@@ -71,10 +71,10 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
                             if (lesson.lesson_week === '2') {
                                 date.add(7, 'day');
                             }
-                            if (date.day() > 14) {
+                            if (date.date() > 14) {
                                 date.add(14, 'day');
                             }
-                            var day = date.day();
+                            var day = date.date();
                             
                             ps.push($http.post(
                                 'https://www.googleapis.com/calendar/v3/calendars/' + 
@@ -89,6 +89,9 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
                                         dateTime: '2014-09-0' + day + 'T' + lesson.time_end,
                                         timeZone: 'Europe/Kiev'
                                     },
+                                    recurrence: [
+                                        "RRULE:FREQ=WEEKLY;UNTIL=20141231T235959Z"
+                                    ],
                                     location: "НТУУ КПІ (" + lesson.lesson_room + ")"
                             }));
                         }
