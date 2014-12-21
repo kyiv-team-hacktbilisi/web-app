@@ -67,7 +67,7 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
                         var ps = [];
                         for (var i = 0; i < classes.length; i++) {
                             var lesson = classes[i];
-                            var date = moment([2014, 8, 1, 8, 0]).day(lesson.day_number);
+                            var date = moment([moment().year(), 8, 1, 8, 0]).day(lesson.day_number);
                             if (lesson.lesson_week === '2') {
                                 date.add(7, 'day');
                             }
@@ -75,23 +75,23 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
                                 date.add(14, 'day');
                             }
                             var day = date.date();
-                            var daystr = day < 10 ? ('0' + day) : ('' + day);
-                            
+                            var daystr = date.format('DD');
                             ps.push($http.post(
                                 'https://www.googleapis.com/calendar/v3/calendars/' + 
                                     calendarId + '/events?access_token=' + token, {
                                     summary: lesson.lesson_name,
-                                    description: lesson.lesson_name + ' (' + lesson.lesson_type + ')',
+                                    description: lesson.lesson_name + ' (' + lesson.lesson_type + ')\n' +
+                                        'Professor: ' + lesson.teacher_name,
                                     start: {
-                                        dateTime: '2014-09-' + daystr + 'T' + lesson.time_start,
+                                        dateTime: moment().year() + '-09-' + daystr + 'T' + lesson.time_start,
                                         timeZone: 'Europe/Kiev'
                                     },
                                     end: {
-                                        dateTime: '2014-09-' + daystr + 'T' + lesson.time_end,
+                                        dateTime: moment().year() + '-09-' + daystr + 'T' + lesson.time_end,
                                         timeZone: 'Europe/Kiev'
                                     },
                                     recurrence: [
-                                        "RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20141231T235959Z"
+                                        "RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=" + moment().year() +"1231T235959Z"
                                     ],
                                     location: "НТУУ КПІ (" + lesson.lesson_room + ")"
                             }));
