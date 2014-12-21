@@ -1,1 +1,1 @@
-web: install -e . ; python src/scheduler/app.py
+web: pip install -e . ; python src/scheduler/app.py
