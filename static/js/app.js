@@ -67,20 +67,21 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
                         var ps = [];
                         for (var i = 0; i < classes.length; i++) {
                             var lesson = classes[i];
+                            var day = lesson.lesson_week === 1 ? 1 : 7;
                             ps.push($http.post(
                                 'https://www.googleapis.com/calendar/v3/calendars/' + 
                                     calendarId + '/events?access_token=' + token, {
                                     summary: lesson.lesson_name,
-                                    description: lesson.lesson_name + ' at ' + lesson.lesson_type,
+                                    description: lesson.lesson_name + ' (' + lesson.lesson_type + ')',
                                     start: {
-                                        dateTime: '2014-09-01T' + lesson.time_start,
+                                        dateTime: '2014-09-0' + day + 'T' + lesson.time_start,
                                         timeZone: 'Europe/Kiev'
                                     },
                                     end: {
-                                        dateTime: '2014-09-01T' + lesson.time_end,
+                                        dateTime: '2014-09-0' + day + 'T' + lesson.time_end,
                                         timeZone: 'Europe/Kiev'
                                     },
-                                    location: "NTUU KPI " + lesson.lesson_room
+                                    location: "НТУУ КПІ (" + lesson.lesson_room + ")"
                             }));
                         }
                         $q.all(ps).then(function () {
