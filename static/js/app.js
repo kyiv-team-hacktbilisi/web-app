@@ -50,7 +50,7 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
             return saved;
         };
     })
-    .factory('addToGCalendar', function ($http, $cookies) {
+    .factory('addToGCalendar', function ($http, $cookies, $q) {
         var token = $cookies.google_access_token;
         return function (groupName, cb) {
             $http.post('/api/kpi_schedule/', {group: groupName})
@@ -73,11 +73,11 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
                                     summary: lesson.lesson_name,
                                     description: lesson.lesson_name + ' at ' + lesson.lesson_type,
                                     start: {
-                                        dateTime: '2014-09-01T' + event.time_start,
+                                        dateTime: '2014-09-01T' + lesson.time_start,
                                         timeZone: 'Europe/Kiev'
                                     },
                                     end: {
-                                        dateTime: '2014-09-01T' + event.time_end,
+                                        dateTime: '2014-09-01T' + lesson.time_end,
                                         timeZone: 'Europe/Kiev'
                                     },
                                     location: "NTUU KPI " + lesson.lesson_room
