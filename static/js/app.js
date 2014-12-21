@@ -54,14 +54,37 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
         var token = $cookies.google_access_token;
         return function (groupName, cb) {
             $http.post('/api/kpi_schedule/', {group: groupName})
-                .success(function (data) {
-                    console.log(data);
+                .success(function (classes) {
+                    
+                    console.log(classes);
+                    var calendarId;
                     $http.post('https://www.googleapis.com/calendar/v3/calendars/?access_token=' + token, {
                         summary: "University schedule",
                         description: "Automatically updated schedule for NTUU \"KPI\"",
                         location: "НТУУ КПІ, Київ, Україна"
-                    }).success(function (data) {
-                        cb(true);
+                    }).success(function (calendar) {
+                        calendarId = calendar.id;
+                        var ps = [];
+                        for (var i = 0; i < classes.length; i++) {
+                            var lesson = classes[i];
+                            ps.push($http.post(
+                                'https://www.googleapis.com/calendar/v3/calendars/' + 
+                                    calendarId + '/events?access_token=' + token, {
+                                    summary: lesson.lesson_name,
+                                    description: lesson.lesson_name + ' at ' + lesson.lesson_type,
+                                    start: {
+                                        dateTime: '2014-09-01T00:00:00+02:00'
+                                    },
+                                    end: {
+                                        dateTime: '2014-12-31T23:59:59+02:00'
+                                    }
+                            }));
+                        }
+                        $q.all(ps).then(function () {
+                            cb(true);
+                        }, function () {
+                            cb(false);
+                        });
                     }).error(function () {
                         cb(false);
                     })
