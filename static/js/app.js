@@ -57,7 +57,9 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngCookies'])
                 .success(function (data) {
                     console.log(data);
                     $http.post('https://www.googleapis.com/calendar/v3/calendars/?access_token=' + token, {
-                        summary: "University schedule"
+                        summary: "University schedule",
+                        description: "Automatically updated schedule for NTUU \"KPI\"",
+                        location: "НТУУ КПІ, Київ, Україна"
                     }).success(function (data) {
                         cb(true);
                     }).error(function () {
