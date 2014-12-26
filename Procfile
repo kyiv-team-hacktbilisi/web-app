@@ -1,1 +1,1 @@
-web: python src/scheduler/app.py \& ; pushd static/ ; bower install ; popd
+web: python src/scheduler/app.py
