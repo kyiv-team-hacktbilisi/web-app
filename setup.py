@@ -1,4 +1,5 @@
 from setuptools import setup, find_packages
+import sys
 
 install_requires = ['redis', 'motor', 'jinja2', 'yuicompressor', 'webassets',
                     'cssmin', 'PyYAML']
